@@ -1,7 +1,7 @@
 import { get, post, update, deletes } from "../../service/api";
 import { navigate } from "../../router/router.js";
-const urlSearch = "https://cb-back-prueba.vercel.app/search";
-const urlVideos = "https://cb-back-prueba.vercel.app/videos";
+const urlSearch = "https://cb-back-am8a72r7g-sebitaslows-projects.vercel.app/search";
+const urlVideos = "https://cb-back-am8a72r7g-sebitaslows-projects.vercel.app/videos";
 
 function getThumbnailUrl(item) {
   if (item && (item.thumbnail || item.poster)) return item.thumbnail || item.poster;

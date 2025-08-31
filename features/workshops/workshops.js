@@ -2,8 +2,8 @@
 import { get, deletes } from "../../service/api";
 import { navigate } from "../../router/router.js";
 
-const URL_VIDEOS = "https://cb-back-prueba.vercel.app/videos";
-const URL_CATEGORIES = "https://cb-back-prueba.vercel.app/categories";
+const URL_VIDEOS = "https://cb-back-am8a72r7g-sebitaslows-projects.vercel.app/videos";
+const URL_CATEGORIES = "https://cb-back-am8a72r7g-sebitaslows-projects.vercel.app/categories";
 
 let cachedCategories = [];
 let cachedVideos = [];
