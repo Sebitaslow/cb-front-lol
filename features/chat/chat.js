@@ -85,6 +85,21 @@ export function initChat() {
     return formattedText;
   }
 
+  // Función para hacer scroll suave al final del chat
+  function smoothScrollToBottom() {
+    const scrollOptions = {
+      top: messagesContainer.scrollHeight,
+      behavior: 'smooth'
+    };
+    messagesContainer.scrollTo(scrollOptions);
+  }
+
+  // Función para verificar si el usuario está cerca del final del chat
+  function isNearBottom() {
+    const threshold = 100; // píxeles desde el final
+    return messagesContainer.scrollHeight - messagesContainer.scrollTop - messagesContainer.clientHeight < threshold;
+  }
+
   // Función para agregar mensajes al chat
   function addMessage(text, sender) {
     const messageDiv = document.createElement('div');
@@ -111,8 +126,8 @@ export function initChat() {
     messageDiv.appendChild(timestamp);
     messagesContainer.appendChild(messageDiv);
     
-    // Scroll al último mensaje
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    // Scroll inteligente: solo hacer scroll si el usuario está cerca del final
+    const shouldScroll = isNearBottom();
     
     // Animación de entrada
     messageDiv.style.opacity = '0';
@@ -122,6 +137,11 @@ export function initChat() {
     setTimeout(() => {
       messageDiv.style.opacity = '1';
       messageDiv.style.transform = 'translateY(0)';
+      
+      // Hacer scroll suave después de la animación si es necesario
+      if (shouldScroll) {
+        smoothScrollToBottom();
+      }
     }, 100);
   }
 
@@ -149,7 +169,7 @@ export function initChat() {
       </div>
     `;
     messagesContainer.appendChild(typingIndicator);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    smoothScrollToBottom();
 
     try {
       console.log('🌐 Enviando a:', CHAT_ENDPOINT);
@@ -202,6 +222,53 @@ export function initChat() {
     }
   });
 
+  // Crear botón de scroll al final
+  const scrollToBottomBtn = document.createElement('button');
+  scrollToBottomBtn.className = 'scroll-to-bottom-btn';
+  scrollToBottomBtn.innerHTML = '⬇️';
+  scrollToBottomBtn.title = 'Ir al final del chat';
+  scrollToBottomBtn.style.cssText = `
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: var(--color-primary);
+    color: white;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  `;
+  
+  // Agregar el botón al contenedor de mensajes
+  messagesContainer.style.position = 'relative';
+  messagesContainer.appendChild(scrollToBottomBtn);
+  
+  // Función para mostrar/ocultar el botón de scroll
+  function updateScrollButton() {
+    const isAtBottom = isNearBottom();
+    if (isAtBottom) {
+      scrollToBottomBtn.style.opacity = '0';
+      scrollToBottomBtn.style.visibility = 'hidden';
+    } else {
+      scrollToBottomBtn.style.opacity = '1';
+      scrollToBottomBtn.style.visibility = 'visible';
+    }
+  }
+  
+  // Event listener para el botón de scroll
+  scrollToBottomBtn.addEventListener('click', () => {
+    smoothScrollToBottom();
+  });
+  
+  // Event listener para detectar scroll manual
+  messagesContainer.addEventListener('scroll', updateScrollButton);
+  
   // Focus en el input al cargar
   input.focus();
 
