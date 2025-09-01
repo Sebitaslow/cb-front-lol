@@ -1,6 +1,6 @@
 import { post } from "../../service/api.js";
 
-const API_BASE = "https://cb-back-am8a72r7g-sebitaslows-projects.vercel.app";
+const API_BASE = "https://cb-back-p-git-main-sebitaslows-projects.vercel.app";
 const CHAT_ENDPOINT = `${API_BASE}/chat`;
 
 export function initChat() {

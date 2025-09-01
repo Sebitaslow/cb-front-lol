@@ -1,7 +1,7 @@
 import { navigate } from "../../router/router.js";
 import { post } from "../../service/api.js";
 
-const API_URL = "https://cb-back-am8a72r7g-sebitaslows-projects.vercel.app/auth";
+const API_URL = "https://cb-back-p-git-main-sebitaslows-projects.vercel.app/auth";
 
 export function LoginUser() {
   const form = document.getElementById("login-form");
