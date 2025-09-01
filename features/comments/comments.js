@@ -1,6 +1,6 @@
 import { get,post,deletes,update, } from "../../service/api.js";
 
-const BASE_URL = "https://cb-back-p-git-main-sebitaslows-projects.vercel.app/comment";
+const BASE_URL = "https://cb-back-p.vercel.app/comment";
 
 // Obtener comentarios de un video
 export async function getComments(id_video) {
